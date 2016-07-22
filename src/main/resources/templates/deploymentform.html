@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Adding new Division</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <h2>Deployment Details</h2>
+    <div>
+        <form class="form-horizontal" th:object="${deployment}" th:action="@{/project/deployment}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{version}"/>
+            <input type="hidden" th:field="*{project.id}"/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Environment:</label>
+                <div class="col-sm-2">
+                <select th:field="*{environment}" class="form-control" >
+                    <option th:each="env: ${T(gov.cdc.nccdphp.domain.EnumEnvironmentName).values()}" th:value="${env}" th:text="${env}"></option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Other:</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" th:field="*{envOtherDescription}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Due Date:</label>
+                <div class="container">
+                    <div class="row">
+                        <div class='col-sm-2'>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" th:field="*{dueDate}"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datetimepicker1').datepicker(
+                                        {
+                                            format: 'mm/dd/yyyy',
+                                            autoclose: true
+                                        }
+                                );
+                            });
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">URL:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{url}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Version:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{projectVersion}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+        </form>
+
+        <span class="navbar-text navbar-right"><a class="navbar-brand" href="#" th:href="@{/project/deployment/new}">
+            <button type="button" class="btn btn-default" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button></a>
+        </span>
+    </div>
+</div>
+
+</body>
+</html>

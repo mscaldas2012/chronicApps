@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Adding new Division</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/navbar :: header"></th:block> /*/-->
+    <h2>Division Details</h2>
+    <div>
+        <form class="form-horizontal" th:object="${division}" th:action="@{/division}" method="post" id="divisionForm">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{version}"/>
+            <div class="form-group has-feedback">
+                <label class="col-sm-2 control-label">Abbreviation:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{abbreviation}" data-validation="required"/>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:field="*{name}" />
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary" onclick="$.validate()">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

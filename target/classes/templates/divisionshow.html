@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Chronic Applications - Admin Module / Divisions</title>
+</head>
+<body>
+<div class="container">
+    <h2>Division Details</h2>
+    <div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Division Id:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" th:text="${division.id}">Division Id</p></div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Abbreviation:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" th:text="${division.abbreviation}">abbreviation</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static" th:text="${division.name}">name</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

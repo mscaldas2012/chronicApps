@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Adding new Division</title>
+    <!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+<div class="container">
+    <!--/*/ <th:block th:include="fragments/navbar :: header"></th:block> /*/-->
+    <h2>Project Details</h2>
+    <div>
+        <form id="form" class="form-horizontal" th:object="${project}" th:action="@{/project}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <input type="hidden" th:field="*{version}"/>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Division:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" th:field="*{division}" data-validation="required">
+                        <option value="" text="Select Division">Select</option>
+                        <option th:each="division: ${divisions}" th:value="${{division}}" th:text="${division.name}" >Wireframe</option>
+                    </select>
+                    <div class="error-message" th:if="${#fields.hasErrors('division')}" th:errors="*{division}">Division Error</div>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')}?has-error" >
+                <label class="col-sm-2 control-label">Name:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{name}" name="name"
+                           data-validation="required"/>
+                    <div class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('abbreviation')}?has-error" >
+                <label class="col-sm-2 control-label">Abbreviation:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{abbreviation}"
+                           data-validation="length" data-validation-length="2-6"/>
+                    <div class="error-message" th:if="${#fields.hasErrors('abbreviation')}" th:errors="*{abbreviation}">abbreviation Error</div>
+
+                </div>
+            </div>
+            <div class="form-group" th:classappend="${#fields.hasErrors('escNumber')}?has-error" >
+                <label class="col-sm-2 control-label">ESC Number:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" th:field="*{escNumber}" pattern= "[0-9]{1,5}"
+                           data-validation="number" data-validation-allowing="range[1000;99999]" data-validation-optional="true"/>
+                    <div class="error-message" th:if="${#fields.hasErrors('escNumber')}" th:errors="*{escNumber}">ESC Number Error</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Manager:</label>
+                <div class="col-sm-5">
+                    <select class="form-control" th:field="*{manager}">
+                        <option th:each="mgr: ${managers}" th:value="${{mgr}}" th:text="${mgr.name}">Wireframe</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group pull-rigth">
+                <button type="submit" class="btn btn-primary" onclick="$.validate()">Save</button>
+                <button type="reset" class="btn btn-default">Cancel</button>
+            </div>
+
+
+        <span class="navbar-text navbar-right"><a class="navbar-brand" href="#" th:href="@{'/project/' + ${{id}} + '/deployment/new'}">
+            <button type="button" class="btn btn-default" aria-label="Left Align">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </button></a>
+        </span>
+
+        <div th:if="${not #lists.isEmpty(project.deployments)}">
+            <h2>Deployments</h2>
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th>Id</th>
+                    <th>Environment</th>
+                    <th>URL</th>
+                    <th>Action</th>
+                </tr>
+                <tr th:each="deployment : ${project.deployments}">
+                    <td><a th:href="${'/project/' + id + '/deployment/edit/' + deployment.id}"><label th:text="${deployment.id}">id</label></a></td>
+                    <td>
+                        <span th:text="${deployment.environment}"/>
+                        <span th:if="${deployment.environment == T(gov.cdc.nccdphp.domain.EnumEnvironmentName).OTHER}">
+                            (&nbsp;<span th:text="${deployment.envOtherDescription}"/>&nbsp;)
+                        </span>
+                    </td>
+
+                    <td th:text="${deployment.url}">url</td>
+                    <td><a th:href="${'/project/' + id + '/deployment/edit/' + deployment.id}">
+                        <img src="../../static/images/edit.png" width="16" height="16" th:src="@{/images/edit.png}"/></a>&nbsp;
+                        <a th:href="${'/project/' + id + '/deployment/delete/' + deployment.id}">
+                            <img src="../../static/images/delete.png" width="16" height="16" th:src="@{/images/delete.png}"/>
+                        </a></td>
+                </tr>
+            </table>
+        </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

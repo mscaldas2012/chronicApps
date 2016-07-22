@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Chronic Applications </title>
+</head>
+<body>
+    <div th:if="${not #lists.isEmpty(divisions)}">
+        <div class="col-md-10"><h2>Divisions List</h2></div>
+        <div class="cold-md-2 text-right">
+            <a class="navbar-brand" href="#" th:href="@{/division/new}">
+                <button type="button" class="btn btn-default" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button></a>
+        </div>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Id</th>
+                <th>Abbreviation</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each="division : ${divisions}">
+                <td><a th:href="${'/division/' + division.id}"><label th:text="${division.id}">id</label></a></td>
+                <td th:text="${division.abbreviation}">abbreviation</td>
+                <td th:text="${division.name}">name</td>
+                <td><a th:href="${'/division/edit/' + division.id}">
+                    <img src="../../static/images/edit.png" width="16" height="16" th:src="@{/images/edit.png}"/></a>&nbsp;
+                <a th:href="${'/division/delete/' + division.id}">
+                    <img src="../../static/images/delete.png" width="16" height="16" th:src="@{/images/delete.png}"/>
+                </a></td>
+            </tr>
+        </table>
+    </div>
+
+
+</body>
+</html>
